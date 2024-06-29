@@ -33,4 +33,6 @@ app.get("/", (req, res)=>{
     res.send("HI, I am root");
 })
 
-
+app.get("/home", (req, res)=>{
+    res.render("./home.ejs");
+})
