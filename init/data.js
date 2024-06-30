@@ -117,9 +117,10 @@ const sampleData = [
         title: "Yumm Cake",
         description: "Tasty cake for my friend",
         image: "m16.jpg",
-        location: "My home",
         country: "Srilanka",
         owner: [],
     },
 
 ]
+
+module.exports = sampleData;
