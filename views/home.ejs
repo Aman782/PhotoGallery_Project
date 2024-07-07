@@ -1,16 +1,18 @@
 <% layout("./layouts/boilerplate.ejs") %>
 <body>
-    <h1>All Listings</h1>
+    <h1 class="mt-2 p-2 ">Gallery</h1>
     <div class="container-fluid m-3 justify-content-center d-flex align-items-center p-3">
         <div class="row row-cols-lg-3 d-flex row-cols-md-2 row-cols-sm-1">
-            <% for(let list of sampleData){ %>
-                <div class="card m-2 p-2 shadow-sm border border-2" style="width: 19rem;">
-                    <img src="/images/<%= list.image %>" class="card-img-top rounded" alt="..." style="height: 19rem;">
-                    <div class="card-body txt-dec">
-                        <h5 class="card-title"><%= list.title %></h5>
-                        <p class="card-text fw-semibold"><%= list.country %></p>
+            <% for(let list of allListings){ %>
+                <a href="/home/<%= list.id %>">
+                    <div class="card m-2 p-2 shadow-sm border border-2" style="width: 19rem;">
+                        <img src="/images/<%= list.image %>" class="card-img-top rounded" alt="..." style="height: 19rem;">
+                        <div class="card-body txt-dec">
+                            <h5 class="card-title"><%= list.title %></h5>
+                            <p class="card-text fw-semibold"><%= list.country %></p>
+                        </div>
                     </div>
-                </div>
+                </a>
             <% } %>
         </div>
     </div>

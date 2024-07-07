@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
+const Listing = require('./models/listings.js');
 const sampleData = require('./init/data');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
@@ -9,7 +10,7 @@ const ejsMate = require('ejs-mate');
 const url = "mongodb://127.0.0.1:27017/photosgallery";
 
 async function main() {
-  await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect(url);
   console.log('Connected to MongoDB');
 }
 
@@ -30,6 +31,14 @@ app.get("/", (req, res) => {
     res.send("HI, I am root");
 });
 
-app.get("/home", (req, res) => {
-    res.render("home", { sampleData });
+app.get('/home', async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("./home.ejs", { allListings });
+});
+
+app.get('/home/:id', async (req, res) => {
+    let { id } = req.params;
+    console.log(id);
+    const listing = await Listing.findById(id);
+    res.render("./show.ejs", { listing });
 });

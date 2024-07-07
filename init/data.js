@@ -5,7 +5,7 @@ const sampleData = [
         image: "m1.jpg",
         location: "street view, los angiles",
         country: "United States America",
-        owner: [],
+        user: null,
     },
 
     {
@@ -14,7 +14,7 @@ const sampleData = [
         image: "m3.jpg",
         location: "Goa beach",
         country: "India",
-        owner: [],
+        user: null,
     },
 
     {
@@ -23,7 +23,7 @@ const sampleData = [
         image: "m5.jpg",
         location: "m-36 Hakway street",
         country: "Argentina",
-        owner: [],
+        user: null,
     },
 
     {
@@ -32,7 +32,7 @@ const sampleData = [
         image: "m6.jpg",
         location: "l-458 new kilester house",
         country: "United States America",
-        owner: [],
+        user: null,
     },
 
 
@@ -42,7 +42,7 @@ const sampleData = [
         image: "m7.jpg",
         location: "Kevin's farm",
         country: "Germany",
-        owner: [],
+        user: null,
     },
 
     {
@@ -51,7 +51,7 @@ const sampleData = [
         image: "m8.jpg",
         location: "my cherious garden",
         country: "Canada, North America",
-        owner: [],
+        user: null,
     },
 
 
@@ -61,7 +61,7 @@ const sampleData = [
         image: "m9.jpg",
         location: "Tower 365, IBM",
         country: "Australia",
-        owner: [],
+        user: null,
     },
 
     {
@@ -70,7 +70,7 @@ const sampleData = [
         image: "m10.jpg",
         location: "New York",
         country: "United States America",
-        owner: [],
+        user: null,
     },
 
 
@@ -80,7 +80,7 @@ const sampleData = [
         image: "m11.jpg",
         location: "wexico garden",
         country: "New Zealand",
-        owner: [],
+        user: null,
     },
 
 
@@ -90,7 +90,7 @@ const sampleData = [
         image: "m12.jpg",
         location: "barbados",
         country: "West Indies",
-        owner: [],
+        user: null,
     },
 
 
@@ -100,7 +100,7 @@ const sampleData = [
         image: "m13.jpg",
         location: "Guyana",
         country: "West Indies",
-        owner: [],
+        user: null,
     },
 
     {
@@ -109,7 +109,7 @@ const sampleData = [
         image: "m15.jpg",
         location: "St. Lucia",
         country: "United States of America",
-        owner: [],
+        user: null,
     },
 
 
@@ -117,10 +117,11 @@ const sampleData = [
         title: "Yumm Cake",
         description: "Tasty cake for my friend",
         image: "m16.jpg",
+        location: "Colombo",
         country: "Srilanka",
-        owner: [],
+        user: null,
     },
 
 ]
 
-module.exports = sampleData;
+module.exports = { data:sampleData};
