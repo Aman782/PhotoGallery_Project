@@ -1,6 +1,6 @@
 const sampleData = [
     {
-        title: "tommy one",
+        title: "Tommy one",
         description: "A cute and innocent puppy!",
         image: "m1.jpg",
         location: "street view, los angiles",

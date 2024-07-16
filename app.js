@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const Listing = require('./models/listings.js');
-const sampleData = require('./init/data');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 
@@ -37,8 +36,28 @@ app.get('/home', async (req, res) => {
 });
 
 app.get('/home/:id', async (req, res) => {
-    let { id } = req.params;
-    console.log(id);
-    const listing = await Listing.findById(id);
-    res.render("./show.ejs", { listing });
+    const { id } = req.params;
+    try {
+        const listing = await Listing.findById(id);
+        res.render("./show.ejs", { listing });
+    } catch (error) {
+        console.error(error);
+        res.status(400).send("Invalid ID");
+    }
+});
+
+app.get('/listing/new', (req, res) => {
+    res.render('./new.ejs');
+});
+
+app.post('/listing/', async (req, res) => {
+    try {
+        const newListing = new Listing(req.body.listing);
+        await newListing.save();
+        console.log(req.body)
+        res.redirect('/home');
+    } catch (error) {
+        console.error(error);
+        res.status(400).send("Error creating new listing");
+    }
 });

@@ -23,9 +23,9 @@ const ListingsSchema = new Schema({
         type: String,
         required: true,
     },
-    user: {
-        type: ObjectId,
-    }
+    // user: {
+    //     type: ObjectId,
+    // }
 });
 
 const Listing = mongoose.model('Listing', ListingsSchema);
