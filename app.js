@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
-const Listing = require('./models/listings.js');
+const Listing = require('./models/Listing.js');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 
@@ -60,4 +60,29 @@ app.post('/listing/', async (req, res) => {
         console.error(error);
         res.status(400).send("Error creating new listing");
     }
+});
+
+app.get('/listing/edit/:id', async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id);
+    console.log(id);
+    console.log(listing);
+    res.render('./update.ejs', { listing });
+});
+
+app.put('/listing/edit/:id', async (req, res) => {
+    try{
+        let { id } = req.params;
+        await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+        res.redirect('/home');
+    }catch(e){
+        console.log(e)
+    }
+    
+});
+
+app.delete('/listing/delete/:id', async (req, res) => {
+    let { id } = req.params;
+    await Listing.findByIdAndDelete(id);
+    res.redirect('/home');
 });
