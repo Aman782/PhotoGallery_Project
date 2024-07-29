@@ -127,22 +127,34 @@ app.get('/listing/:id/reviews', async (req, res, next) => {
 });
 
 
-app.post('/listing/:id/reviews', async (req, res, next)=>{
-    try{
-        let {id} = req.params;
+app.post('/listing/:id/reviews', async (req, res, next) => {
+    try {
+        let { id } = req.params;
         let listing = await Listing.findById(id);
         console.log(req.body.review);
         let newReview = new Review(req.body.review);
         let o = await newReview.save();
         console.log(o);
         listing.reviews.push(o._id);
+        await listing.save();  // Save the updated listing document
         console.log(listing);
         res.redirect(`/home/${id}`);
-    }catch(err){
+    } catch (err) {
         next(err);
     }
 });
 
+app.delete('/listing/:id/reviews/:reviewId', async (req, res, next)=>{
+   try{
+    let {id, reviewId} = req.params;
+    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});   
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/home/${id}`);
+   }catch(err){
+     next(err);
+   }
+  
+})
 
 
 app.all("*", (req, res, next)=>{

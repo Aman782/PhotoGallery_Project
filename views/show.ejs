@@ -41,23 +41,25 @@
 
 
         <div class="row">
-            <div class="col-md-12">
-                <div class="card border-2" style="width: 18rem;">
+
+            <div class="col-md-12 d-flex flex-wrap">
+               <% for(review of listing.reviews){ %>
+                <div class="card border-2 bg-info-subtle" style="width: 18rem;">
                     <div class="card-body">
-                      <h5 class="card-title"><%= listing.reviews %></h5>
-                      <!-- later, in the place of subtitle add username that has given the review -->
-                      <!-- <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6> -->
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="#" class="card-link">
-                        <button type="button" class="btn btn-primary">DELETE</button>
-                      </a>
+                      <h5 class="card-title fs-4 fw-bold"><%= review.comment %></h5>
+                      <p class="card-text fs-6 fw-semibold">Rating: <%= review.rating %>&star;</p>
+
+                      <form action="/listing/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="card-link" method="post">
+                          <button type="submit" class="btn bg-warning fw-bold ">DELETE</button>
+                      </form>
+
                     </div>
                   </div>
+                <% } %>
             </div>
         </div>
     </div>
-
-
+    <hr class="border-2">
 
 
 </body>
