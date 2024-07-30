@@ -7,6 +7,9 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const ExpressError = require('./Utils/ExpressError');
 const Review = require('./models/reviews.js');
+const listingsRoutes = require('./router/listing')
+const reviewRoutes = require('./router/review');
+
 
 const url = "mongodb://127.0.0.1:27017/photosgallery";
 
@@ -38,7 +41,7 @@ app.get("/", (req, res) => {
 // Home Route
 app.get('/home', async (req, res) => {
     const allListings = await Listing.find({});
-    res.render("./home.ejs", { allListings });
+    res.render("./listings/home.ejs", { allListings });
 });
 
 
@@ -48,113 +51,15 @@ app.get('/home/:id', async (req, res) => {
     try {
         const listing = await Listing.findById(id).populate("reviews");
         console.log(listing);
-        res.render("./show.ejs", { listing });
+        res.render("./listings/show.ejs", { listing });
     } catch (error) {
         console.error(error);
         res.status(400).send("Invalid ID");
     }
 });
 
-
-app.get('/listing/new', (req, res) => {
-    res.render('./new.ejs');
-});
-
-
-// Create Route
-app.post('/listing/', async (req, res, next) => {
-    try {
-        const newListing = new Listing(req.body.listing);
-        await newListing.save();
-        console.log(req.body)
-        res.redirect('/home');
-    } catch (error) {
-        // console.error(error);
-        // res.status(400).send("Error creating new listing");
-        next(err);
-    }
-});
-
-
-app.get('/listing/edit/:id', async (req, res, next) => {
-    try{
-        let { id } = req.params;
-        let listing = await Listing.findById(id);
-        console.log(id);
-        console.log(listing);
-        res.render('./update.ejs', { listing });
-    }catch(err){
-        next(err);
-    }
-    
-});
-
-
-// Update Route
-app.put('/listing/edit/:id', async (req, res) => {
-    try{
-        let { id } = req.params;
-        await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-        res.redirect('/home');
-    }catch(e){
-        console.log(e)
-    }
-    
-});
-
-
-// Delete Route
-app.delete('/listing/delete/:id', async (req, res, next) => {
-    try{
-        let { id } = req.params;
-        await Listing.findByIdAndDelete(id);
-        res.redirect('/home');
-    }catch(err){
-        next(err);
-    }
-    
-});
-
-
-app.get('/listing/:id/reviews', async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        let listing = await Listing.findById(id);
-        res.render('./review.ejs', { listing });
-    } catch (err) {
-        next(err);
-    }
-});
-
-
-app.post('/listing/:id/reviews', async (req, res, next) => {
-    try {
-        let { id } = req.params;
-        let listing = await Listing.findById(id);
-        console.log(req.body.review);
-        let newReview = new Review(req.body.review);
-        let o = await newReview.save();
-        console.log(o);
-        listing.reviews.push(o._id);
-        await listing.save();  // Save the updated listing document
-        console.log(listing);
-        res.redirect(`/home/${id}`);
-    } catch (err) {
-        next(err);
-    }
-});
-
-app.delete('/listing/:id/reviews/:reviewId', async (req, res, next)=>{
-   try{
-    let {id, reviewId} = req.params;
-    await Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});   
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/home/${id}`);
-   }catch(err){
-     next(err);
-   }
-  
-})
+app.use('/listing', listingsRoutes);
+app.use('/listing/:id/reviews', reviewRoutes);
 
 
 app.all("*", (req, res, next)=>{
