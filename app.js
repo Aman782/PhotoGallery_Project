@@ -14,7 +14,7 @@ const session = require('express-session');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const User = require('./models/user.js');
-
+const userRoutes = require('./router/user.js');
 
 const url = "mongodb://127.0.0.1:27017/photosgallery";
 
@@ -51,6 +51,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
     next();
 });
 
@@ -58,15 +60,15 @@ app.listen(4000, () => {
     console.log("listening at port 4000");
 });
 
-app.get('/register', async (req, res)=>{
-    let demoUser = new User({
-        email:"demouser@gmail.com",
-        username: "developer",
-    });
+// app.get('/register', async (req, res)=>{
+//     let demoUser = new User({
+//         email:"demouser@gmail.com",
+//         username: "developer",
+//     });
 
-    let regDemoUser = await User.register(demoUser, "hellodemoUser");
-    res.send(regDemoUser);
-})
+//     let regDemoUser = await User.register(demoUser, "hellodemoUser");
+//     res.send(regDemoUser);
+// })
 
 // Root route
 app.get("/", (req, res) => {
@@ -83,7 +85,7 @@ app.get('/home', async (req, res) => {
 app.get('/home/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const listing = await Listing.findById(id).populate("reviews");
+        const listing = await Listing.findById(id).populate("reviews").populate("owner");
         console.log(listing);
         res.render("./listings/show.ejs", { listing });
     } catch (error) {
@@ -94,6 +96,7 @@ app.get('/home/:id', async (req, res) => {
 
 app.use('/listing', listingsRoutes);  // Ensure this matches the form action
 app.use('/listing/:id/reviews', reviewRoutes);
+app.use('/', userRoutes);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));

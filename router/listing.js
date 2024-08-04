@@ -2,16 +2,18 @@ const express = require('express');
 const Listing = require('../models/Listing');
 const ExpressError = require('../Utils/ExpressError');
 const router = express.Router({ mergeParams: true });
+const {isLoggedIn, isOwner} = require('../authenticate');
 
 // Route to show the new listing form
-router.get('/new', (req, res) => {  // Changed the path here
+router.get('/new', isLoggedIn,  (req, res) => {  // Changed the path here
     res.render('listings/new.ejs');  // Make sure the path is correct
 });
 
 // Create Route
-router.post('/new', async (req, res, next) => {
+router.post('/new', isLoggedIn, async (req, res, next) => {
     try {
         const newListing = new Listing(req.body.listing);
+        newListing.owner = req.user._id;
         await newListing.save();
         req.flash("success", "Post Uploaded Successfully!");
         res.redirect('/home');
@@ -21,7 +23,7 @@ router.post('/new', async (req, res, next) => {
 });
 
 // Edit Route
-router.get('/edit/:id', async (req, res, next) => {
+router.get('/edit/:id', isLoggedIn, isOwner, async (req, res, next) => {
     try {
         let { id } = req.params;
         let listing = await Listing.findById(id);
@@ -32,7 +34,7 @@ router.get('/edit/:id', async (req, res, next) => {
 });
 
 // Update Route
-router.put('/edit/:id', async (req, res) => {
+router.put('/edit/:id', isLoggedIn, isOwner, async (req, res) => {
     try {
         let { id } = req.params;
         await Listing.findByIdAndUpdate(id, { ...req.body.listing });
@@ -44,7 +46,7 @@ router.put('/edit/:id', async (req, res) => {
 });
 
 // Delete Route
-router.delete('/delete/:id', async (req, res, next) => {
+router.delete('/delete/:id', isLoggedIn, isOwner, async (req, res, next) => {
     try {
         let { id } = req.params;
         await Listing.findByIdAndDelete(id);
