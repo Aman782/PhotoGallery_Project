@@ -81,18 +81,6 @@ app.get('/home', async (req, res) => {
     res.render("./listings/home.ejs", { allListings });
 });
 
-// Show route
-app.get('/home/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const listing = await Listing.findById(id).populate("reviews").populate("owner");
-        console.log(listing);
-        res.render("./listings/show.ejs", { listing });
-    } catch (error) {
-        console.error(error);
-        res.status(400).send("Invalid ID");
-    }
-});
 
 app.use('/listing', listingsRoutes);  // Ensure this matches the form action
 app.use('/listing/:id/reviews', reviewRoutes);

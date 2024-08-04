@@ -47,6 +47,7 @@
                <% for(review of listing.reviews){ %>
                 <div class="card border-2 bg-info-subtle" style="width: 18rem;">
                     <div class="card-body">
+                      <p class="fw-bold">@<%= review.author.username %></p>
                       <h5 class="card-title fs-4 fw-bold"><%= review.comment %></h5>
                       <p class="card-text fs-6 fw-semibold">Rating: <%= review.rating %>&star;</p>
 

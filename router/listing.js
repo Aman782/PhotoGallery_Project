@@ -9,6 +9,21 @@ router.get('/new', isLoggedIn,  (req, res) => {  // Changed the path here
     res.render('listings/new.ejs');  // Make sure the path is correct
 });
 
+
+// Show route
+router.get('/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    try {
+        const listing = await Listing.findById(id).populate({path:"reviews", populate:{path:"author"}}).populate("owner");
+        console.log(listing);
+        res.render("./listings/show.ejs", { listing });
+    } catch (error) {
+        console.error(error);
+        res.status(400).send("Invalid ID");
+    }
+});
+
+
 // Create Route
 router.post('/new', isLoggedIn, async (req, res, next) => {
     try {

@@ -23,7 +23,7 @@
     <div class="container-fluid m-2 justify-content-center d-flex align-items-center p-3">
         <div class="row row-cols-lg-3 d-flex row-cols-md-2 row-cols-sm-1">
             <% for(let list of allListings) { %>
-                <a href="/home/<%= list.id %>" class="text-decoration-none">
+                <a href="/listing/<%= list.id %>" class="text-decoration-none">
                     <div class="card m-2 p-2 shadow-sm border border-2" style="width: 19rem; background-color: rgb(230, 245, 245);">
                         <img src="/images/<%= list.image %>" class="card-img-top rounded" alt="..." style="height: 18rem;">
                         <div class="card-body txt-dec">
