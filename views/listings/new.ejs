@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-8 mt-3">
                 <h2>Upload new memories</h2>
-                <form action="/listing/new" method="post" novalidate class="needs-validation">
+                <form action="/listing/new" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
                     <div class="mt-3 mb-3">
                         <label for="title" class="form-label fw-semibold">Title</label>
                         <input type="text" name="listing[title]" placeholder="enter title" class="form-control" required>
@@ -16,8 +16,8 @@
                     </div>
 
                     <div class="mt-3 mb-3">
-                        <label for="image" class="form-label fw-semibold">URL/Link</label>
-                        <input type="text" name="listing[image]" placeholder="enter image url" class="form-control" required>
+                        <label for="image" class="form-label fw-semibold">Upload Image</label>
+                        <input type="file" name="listing[image]" class="form-control" required>
                     </div>
 
                     <div class="mt-3 mb-3">

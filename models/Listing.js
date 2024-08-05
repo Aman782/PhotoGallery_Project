@@ -5,7 +5,10 @@ const Review = require('./reviews')
 const listingSchema = new mongoose.Schema({
     title: String,
     description: String,
-    image: String,
+    image:{
+        url: String,
+        filename: String,
+    },
     location: String,
     country: String,
     reviews: [

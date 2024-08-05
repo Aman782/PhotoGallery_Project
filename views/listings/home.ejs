@@ -25,7 +25,7 @@
             <% for(let list of allListings) { %>
                 <a href="/listing/<%= list.id %>" class="text-decoration-none">
                     <div class="card m-2 p-2 shadow-sm border border-2" style="width: 19rem; background-color: rgb(230, 245, 245);">
-                        <img src="/images/<%= list.image %>" class="card-img-top rounded" alt="..." style="height: 18rem;">
+                        <img src="<%= list.image.url %>" class="card-img-top rounded" alt="..." style="height: 18rem;">
                         <div class="card-body txt-dec">
                             <h5 class="card-title fw-bold"><%= list.title %></h5>
                             <p class="card-text fw-semibold btn btn-primary"><%= list.country %></p>

@@ -3,6 +3,11 @@ const Listing = require('../models/Listing');
 const ExpressError = require('../Utils/ExpressError');
 const router = express.Router({ mergeParams: true });
 const {isLoggedIn, isOwner} = require('../authenticate');
+const multer = require('multer');
+const {storage} = require('../Cloudconfig');
+const upload = multer({storage});
+
+
 
 // Route to show the new listing form
 router.get('/new', isLoggedIn,  (req, res) => {  // Changed the path here
@@ -25,10 +30,13 @@ router.get('/:id', isLoggedIn, async (req, res) => {
 
 
 // Create Route
-router.post('/new', isLoggedIn, async (req, res, next) => {
+router.post('/new', isLoggedIn, upload.single("listing[image]"), async (req, res, next) => {
     try {
+        let url = req.file.path;
+        let filename = req.file.filename;
         const newListing = new Listing(req.body.listing);
         newListing.owner = req.user._id;
+        newListing.image = {url, filename};
         await newListing.save();
         req.flash("success", "Post Uploaded Successfully!");
         res.redirect('/home');
@@ -36,6 +44,7 @@ router.post('/new', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
 
 // Edit Route
 router.get('/edit/:id', isLoggedIn, isOwner, async (req, res, next) => {
