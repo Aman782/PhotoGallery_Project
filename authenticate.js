@@ -1,8 +1,3 @@
-// const express = require('express');
-// const flash = require('connect-flash');
-// const session = require('express-session');
-// const passport = require('passport');
-
 const Listing = require("./models/Listing");
 const Review = require('./models/reviews');
 
@@ -45,8 +40,3 @@ module.exports.isAuthor = async (req, res, next)=>{
     }
     next();
 }
-
-
-
-// module.exports = isLoggedIn;
-// module.exports = saveRedirectUrl;

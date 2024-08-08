@@ -58,10 +58,16 @@ router.get('/edit/:id', isLoggedIn, isOwner, async (req, res, next) => {
 });
 
 // Update Route
-router.put('/edit/:id', isLoggedIn, isOwner, async (req, res) => {
+router.put('/edit/:id', isLoggedIn, isOwner, upload.single("listing[image]"), async (req, res) => {
     try {
         let { id } = req.params;
-        await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+        let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+        if(typeof req.file!=="undefined"){
+            let url = req.file.path;
+            let filename = req.file.filename;
+            listing.image = {url, filename};
+            await listing.save();
+        }
         req.flash("success", "Post Updated Successfully!");
         res.redirect('/home');
     } catch (e) {
