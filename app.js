@@ -1,10 +1,25 @@
-if(process.env.NODE_ENV!='production'){
-    require("dotenv").config();
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config(); // Ensure .env is loaded in development
 }
 
+const URL = "mongodb+srv://amanpandey45692:12OuC1aQT4UduJL5@projectsnapbox.nkxy2.mongodb.net/?retryWrites=true&w=majority&appName=ProjectSnapbox"
+
+const PORT = process.env.PORT || 4000;
+const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
+
+console.log("Environment:", process.env.NODE_ENV);
+console.log("MongoDB URL:", process.env.MONGO_URL);
+
+mongoose.connect(URL)
+    .then(() => console.log("DB connected successfully!"))
+    .catch((err) => console.error("DB connection error:", err));
+
+    app.listen(PORT, () => {
+        console.log("App started!");
+      });
+    
 const path = require('path');
 const Listing = require('./models/Listing.js');
 const methodOverride = require('method-override');
@@ -22,14 +37,6 @@ const userRoutes = require('./router/user.js');
 const multer = require('multer');
 const upload = multer({dest: 'uploads/'})
 
-const url = "mongodb://127.0.0.1:27017/photosgallery";
-
-async function main() {
-  await mongoose.connect(url);
-  console.log('Connected to MongoDB');
-}
-
-main().catch(err => console.log(err));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -62,19 +69,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(4000, () => {
-    console.log("listening at port 4000");
-});
-
-// app.get('/register', async (req, res)=>{
-//     let demoUser = new User({
-//         email:"demouser@gmail.com",
-//         username: "developer",
-//     });
-
-//     let regDemoUser = await User.register(demoUser, "hellodemoUser");
-//     res.send(regDemoUser);
-// })
 
 // Root route
 app.get("/", (req, res) => {
@@ -88,7 +82,7 @@ app.get('/home', async (req, res) => {
 });
 
 
-app.use('/listing', listingsRoutes);  // Ensure this matches the form action
+app.use('/listing', listingsRoutes);
 app.use('/listing/:id/reviews', reviewRoutes);
 app.use('/', userRoutes);
 

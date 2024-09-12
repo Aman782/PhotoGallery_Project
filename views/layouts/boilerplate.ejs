@@ -16,7 +16,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      background-color: your_color;
+      background-color: black;
       text-align: center;
       padding: 10px;
     }
@@ -29,38 +29,97 @@
     .plussign::before {
       content: "➕";
     }
+
+
+    /* Adjusted Navbar Height */
+    .navbar {
+      padding: 0.5rem 1rem;
+      /* Reduce padding for a smaller height */
+    }
+
+    /* Navbar Brand Logo */
+    .navbar-brand img {
+      height: 2rem;
+      /* Slightly smaller logo */
+    }
+
+    /* Navbar Link Styles */
+    .navbar-nav .nav-link {
+      padding: 0.5rem 0.75rem;
+      /* Adjust padding for links */
+    }
+
+    /* Navbar Toggler Icon */
+    .navbar-toggler {
+      padding: 0.25rem 0.5rem;
+      /* Adjust padding for the toggler */
+    }
+
+    /* Ensure the image is centered and properly resized */
+    .resize-img {
+      height: 6rem;
+      /* Adjust height as needed */
+      width: auto;
+      /* Maintain aspect ratio */
+    }
+
+    /* Additional styling for text center alignment */
+    .text-center {
+      text-align: center;
+    }
+
+    .mb-2 {
+      margin-bottom: 0.5rem;
+      /* Add space below the image */
+    }
+
+    .mb-0 {
+      margin-bottom: 0;
+      /* Remove bottom margin for the text */
+    }
   </style>
 </head>
 
 <body>
   <!-- Navbar section -->
   <section>
-    <nav class="navbar navbar-expand-lg navbar chg-bg
-         border-bottom border-body" data-bs-theme="dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-body">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">PhotoGallery</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#">
+          <img src="/images/SB_Logo.jpg" alt="Logo" class="img-fluid" style="height: 2.5rem;">
+        </a>
+    
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-link active" aria-current="page" href="http://localhost:4000/home">Home</a>
-            <a class="nav-link" href="#">About</a>
-          </div>
-
-          <div class="navbar-nav ms-auto">
+    
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active fs-6" aria-current="page" href="/home">Home</a>
+            </li>
             <% if(!currUser){ %>
-              <a class="nav-link" href="/signup">SignUp</a>
-              <a class="nav-link" href="/login">Login</a>
-              <% }else{ %>
+              <li class="nav-item">
+                <a class="nav-link" href="/signup">SignUp</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Login</a>
+              </li>
+            <% } else { %>
+              <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
-                <a href="" class="nav-link"><i class="fa-solid fa-user"></i></a>
-                <% } %>
-          </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa-solid fa-user"></i></a>
+              </li>
+            <% } %>
+          </ul>
         </div>
       </div>
     </nav>
+    
+
   </section>
 
 
@@ -68,17 +127,16 @@
 
   <!-- Footer Section -->
   <section class=".footer">
-    <div class="container-fluid d-flex container-wrap justify-content-evenly mt-5 pt-3 pb-3"
-      style="background-color: #00796B; color: aliceblue;">
-      <!-- #21304f -->
+    <div class="container-fluid d-flex container-wrap justify-content-evenly mt-5 pt-3 pb-3 "
+      style="background-color:rgb(38, 34, 34); color: aliceblue;">
       <!-- Row1 -->
-      <!-- <div class="row d-flex">
-          <div class="col-md-8 mt-3 mb-3 text-center">
-            <img src="BosscoderAcademy_logo.jpeg" class="img-fluid rounded img-size mt-2 mb-2" alt="">
-            <p class="fs-6 fw-semibold">Helping ambitious learners upskill themselves & shift to top Product Based Company</p>
-          </div>
-          <hr>
-        </div> -->
+      <div class="row d-flex justify-content-center align-items-center text-center">
+        <div class="col-md-12 d-flex flex-column align-items-center">
+          <img src="/images/SB_Logo.jpg" alt="Logo" class="resize-img mb-2">
+          <p class="mb-0">&copy; <span id="currentYear">2024</span> SnapBox. All Rights Reserved.</p>
+        </div>
+      </div>
+
 
       <!-- Row2 -->
       <div class="row d-flex">
@@ -90,8 +148,6 @@
           <span class="d-block fs-6 fw-semibold mt-2 mb-2">Reviews</span>
           <span class="d-block fs-6 fw-semibold mt-2 mb-2">Privacy Policy</span>
           <span class="d-block fs-6 fw-semibold mt-2 mb-2">Terms & Conditions</span>
-          <span class="d-block fs-6 fw-semibold mt-2 mb-2">Pricing and Refund Policy</span>
-          <span class="d-block fs-6 fw-semibold mt-2 mb-2">Har Hath Kalam</span>
         </div>
         <hr>
       </div>
@@ -100,7 +156,7 @@
       <div class="row d-flex">
         <div class="col-md-12 mt-3 mb-3 text-center">
           <h1 class="fs-3 fw-bold mt-3 mb-3">Contact Us</h1>
-          <span class="d-block fs-6 fw-semibold mt-2 mb-2">Email: <br> ask@bosscoderacademy.com</span>
+          <span class="d-block fs-6 fw-semibold mt-2 mb-2">Email: <br> ask@SnapBox.com</span>
           <span class="d-block fs-6 fw-semibold mt-3 mb-3">E-401, Dasnac The Jewel of <br> Noida, Sector 75, Noida UP
             201301</span>
         </div>
@@ -188,5 +244,4 @@
   </script>
 
 </body>
-
 </html>
